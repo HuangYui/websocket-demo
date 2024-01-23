@@ -1,0 +1,32 @@
+#spring相关
+spring:
+  cloud:
+    config:
+      discovery:
+        enabled: ${config-discovery-enabled:false}            # 默认false，设为true表示使用注册中心中的configserver配置而不自己配置configserver的uri
+        serviceId: sc-config  # 指定config server在服务发现中的serviceId，默认为：configserver
+      profile: ${spring-profiles-active:test}
+      fail-fast: true
+      username: user
+      password: admin123
+      enabled: ${config-discovery-enabled:false}
+    inetutils:
+      ignoredInterfaces:
+        - Virtual.* # 忽略虚拟机网卡
+      use-only-site-local-interfaces: true
+      preferred-networks: ${config-preferred-networks:192.168.1.*} # 优先使用 192.168.1.*
+    nacos:
+      discovery:
+        enabled: ${nacos-enabled:true}
+        # 注册中心地址
+        server-addr: ${eureka-server:192.168.1.60}:${eureka-server-port:31248}
+      config:
+        enabled: ${nacos-enabled:true}
+        # 配置中心地址
+        server-addr: ${eureka-server:192.168.1.60}:${eureka-server-port:31248}
+        # 配置文件格式
+        file-extension: yml
+        # 共享配置
+        shared-configs:
+          - application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+          - application-secret-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
