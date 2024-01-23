@@ -10,7 +10,7 @@ public class WebSocketController {
 
 
     @MessageMapping("/message")
-    @SendTo("/topic/messages")
+    @SendTo("/topic/user")
     public String handle(String message) {
         return "收到消息: " + message;
     }
